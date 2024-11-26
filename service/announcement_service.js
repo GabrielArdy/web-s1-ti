@@ -82,6 +82,32 @@ class AnnouncementService {
             throw error;
         }
     }
+
+    async findAllPaginated(page, limit) {
+        try {
+            const offset = (page - 1) * limit;
+            
+            const { count, rows } = await AnnouncementRepository.findAndCountAll({
+                limit,
+                offset,
+                order: [['createdAt', 'DESC']]
+            });
+
+            const totalPages = Math.ceil(count / limit);
+
+            return {
+                announcements: rows,
+                total: count,
+                totalPages
+            };
+        } catch (error) {
+            logger.error('Failed to fetch paginated announcements', {
+                error: error.message,
+                stack: error.stack
+            });
+            throw error;
+        }
+    }
 }
 
 module.exports = new AnnouncementService();

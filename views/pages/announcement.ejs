@@ -50,14 +50,26 @@
             </div>
             
             <div class="pagination">
-                <a href="#" class="pagination-nav">&laquo; Kembali</a>
-                <a href="#" class="pagination-number active">1</a>
-                <a href="#" class="pagination-number">2</a>
-                <a href="#" class="pagination-number">3</a>
-                <span class="pagination-ellipsis">...</span>
-                <a href="#" class="pagination-number">100</a>
-                <a href="#" class="pagination-nav">Lanjut &raquo;</a>
-              </div>
+                <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+                    <% if (hasPrevPage) { %>
+                        <a href="/pengumuman?page=<%= page-1 %>" class="pagination-nav">&laquo; Kembali</a>
+                    <% } %>
+                    
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <% if (i === 1 || i === totalPages || (i >= page-2 && i <= page+2)) { %>
+                            <a href="/pengumuman?page=<%= i %>" 
+                               class="pagination-number <%= i === page ? 'active' : '' %>">
+                                <%= i %>
+                            </a>
+                        <% } else if (i === page-3 || i === page+3) { %>
+                            <span class="pagination-ellipsis">...</span>
+                        <% } %>
+                    <% } %>
+            
+                    <% if (hasNextPage) { %>
+                        <a href="/pengumuman?page=<%= page+1 %>" class="pagination-nav">Lanjut &raquo;</a>
+                    <% } %>
+                <% } %>
             </div>
         </div>
     </section>
