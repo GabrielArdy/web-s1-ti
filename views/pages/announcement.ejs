@@ -1,0 +1,64 @@
+<%- contentFor('body') %>
+
+<!-- Announcement Header -->
+<div class="pengumuman-banner">
+    <div class="pengumuman-image">
+      <img src="img/sample_helix_header1.jpg" alt="Ilustrasi Pengumuman" />
+    </div>
+    <div class="container">
+      <div class="pengumuman-content">
+        <h1>Pengumuman</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li><a href="index.html">Beranda</a></li>
+            <li class="active">Pengumuman</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+    <!-- Announcement List -->
+    <section class="pengumuman-list">
+        <div class="container">
+            <div class="card-grid">
+                <% if (announcements && announcements.length > 0) { %>
+                    <% announcements.forEach(announcement => { %>
+                        <div class="card">
+                            <h3 class="card-title"><%= announcement.title %></h3>
+                            <img
+                                src="<%= announcement.image || '/img/default-announcement.jpg' %>"
+                                alt="<%= announcement.title %>"
+                                class="card-image"
+                                onerror="this.src='/img/default-announcement.jpg'"
+                            />
+                            <p class="card-text">
+                                <%= announcement.description.length > 150 ? 
+                                    announcement.description.substring(0, 150) + '...' : 
+                                    announcement.description %>
+                            </p>
+                            <a href="/pengumuman/<%= announcement.id %>" class="btn-read-more">
+                                Baca Selengkapnya
+                            </a>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="no-announcements">
+                        <p>Belum ada pengumuman yang tersedia.</p>
+                    </div>
+                <% } %>
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="pagination-nav">&laquo; Kembali</a>
+                <a href="#" class="pagination-number active">1</a>
+                <a href="#" class="pagination-number">2</a>
+                <a href="#" class="pagination-number">3</a>
+                <span class="pagination-ellipsis">...</span>
+                <a href="#" class="pagination-number">100</a>
+                <a href="#" class="pagination-nav">Lanjut &raquo;</a>
+              </div>
+            </div>
+        </div>
+    </section>
+        

@@ -35,7 +35,8 @@ class AnnouncementService {
             logger.info('Successfully retrieved announcements', { count: result.length });
             return result;
         } catch (error) {
-            logger.error('Failed to fetch announcements', { error: error.message });
+            logger.error('Failed to fetch announcements');
+            console.error(error);
             throw error;
         }
     }
