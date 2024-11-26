@@ -1,14 +1,18 @@
 const express = require('express');
 const app = express();
 const layout = require('express-ejs-layouts');
+const approutes = require('./routes/routes');
 
 app.set('view engine', 'ejs');
 app.set('views', './views')
-app.set('layout', './views/layouts/main')
+app.set('layout', './layouts/main')
 app.use(layout);
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+
+// routes
+app.use(approutes);
 
 app.get('/', (req, res) => {
     res.render('pages/index', { 

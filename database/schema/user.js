@@ -1,7 +1,10 @@
-const { DataTypes } = require('sequelize');
+// schema/user.js
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../../config/database');
 
-const Users = sequelize.define('tb_user', {
+class User extends Model {}
+
+User.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -25,8 +28,11 @@ const Users = sequelize.define('tb_user', {
         defaultValue: 'user'
     }
 }, {
-    timestamps: true,
+    sequelize,
+    modelName: 'tb_user',
+    tableName: 'tb_user',
+    freezeTableName: true,
+    timestamps: true
 });
 
-module.exports = Users;
-
+module.exports = User;

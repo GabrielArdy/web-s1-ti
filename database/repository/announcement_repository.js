@@ -24,6 +24,10 @@ class AnnouncementRepository {
     async findByAuthor(author) {
         return await Announcement.findAll({ where: { author } });
     }
+
+    async findAndCountAll(options) {
+        return await Announcement.findAndCountAll(options);
+    }
 }
 
 module.exports = new AnnouncementRepository();

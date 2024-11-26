@@ -1,37 +1,31 @@
+// migrations/YYYYMMDDHHMMSS-create-tb-lowongan-asisten.js
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('tb_pengumuman', {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('tb_lowongan_asisten', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      description: {
+      job_title: {
         type: Sequelize.TEXT,
         allowNull: false
       },
-      content: {
+      job_description: {
         type: Sequelize.TEXT,
         allowNull: false
       },
-      image: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      author: {
+      lecturer_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'tb_user',
+          model: 'tb_lecturer',
           key: 'id'
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -41,10 +35,12 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       }
-  });
-},
+    }, {
+      freezeTableName: true
+    });
+  },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('tb_pengumuman');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('tb_lowongan_asisten');
   }
 };

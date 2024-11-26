@@ -1,0 +1,76 @@
+<%- contentFor('body') %>
+
+<!-- Announcement Header -->
+<div class="pengumuman-banner">
+    <div class="pengumuman-image">
+      <img src="img/sample_helix_header1.jpg" alt="Ilustrasi Pengumuman" />
+    </div>
+    <div class="container">
+      <div class="pengumuman-content">
+        <h1>Pengumuman</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li><a href="/">Beranda</a></li>
+            <li class="active">Pengumuman</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+    <!-- Announcement List -->
+    <section class="pengumuman-list">
+        <div class="container">
+            <div class="card-grid">
+                <% if (announcements && announcements.length > 0) { %>
+                    <% announcements.forEach(announcement => { %>
+                        <div class="card">
+                            <h3 class="card-title"><%= announcement.title %></h3>
+                            <img
+                                src="<%= announcement.image || '/img/default-announcement.jpg' %>"
+                                alt="<%= announcement.title %>"
+                                class="card-image"
+                                onerror="this.src='/img/default-announcement.jpg'"
+                            />
+                            <p class="card-text">
+                                <%= announcement.description.length > 150 ? 
+                                    announcement.description.substring(0, 150) + '...' : 
+                                    announcement.description %>
+                            </p>
+                            <a href="/pengumuman/<%= announcement.id %>" class="btn-read-more">
+                                Baca Selengkapnya
+                            </a>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="no-announcements">
+                        <p>Belum ada pengumuman yang tersedia.</p>
+                    </div>
+                <% } %>
+            </div>
+            
+            <div class="pagination">
+                <% if (typeof totalPages !== 'undefined' && totalPages > 1) { %>
+                    <% if (hasPrevPage) { %>
+                        <a href="/pengumuman?page=<%= page-1 %>" class="pagination-nav">&laquo; Kembali</a>
+                    <% } %>
+                    
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <% if (i === 1 || i === totalPages || (i >= page-2 && i <= page+2)) { %>
+                            <a href="/pengumuman?page=<%= i %>" 
+                               class="pagination-number <%= i === page ? 'active' : '' %>">
+                                <%= i %>
+                            </a>
+                        <% } else if (i === page-3 || i === page+3) { %>
+                            <span class="pagination-ellipsis">...</span>
+                        <% } %>
+                    <% } %>
+            
+                    <% if (hasNextPage) { %>
+                        <a href="/pengumuman?page=<%= page+1 %>" class="pagination-nav">Lanjut &raquo;</a>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+    </section>
+        

@@ -35,7 +35,8 @@ class AnnouncementService {
             logger.info('Successfully retrieved announcements', { count: result.length });
             return result;
         } catch (error) {
-            logger.error('Failed to fetch announcements', { error: error.message });
+            logger.error('Failed to fetch announcements');
+            console.error(error);
             throw error;
         }
     }
@@ -77,6 +78,32 @@ class AnnouncementService {
             logger.error('Failed to find announcements by author', { 
                 author, 
                 error: error.message 
+            });
+            throw error;
+        }
+    }
+
+    async findAllPaginated(page, limit) {
+        try {
+            const offset = (page - 1) * limit;
+            
+            const { count, rows } = await AnnouncementRepository.findAndCountAll({
+                limit,
+                offset,
+                order: [['createdAt', 'DESC']]
+            });
+
+            const totalPages = Math.ceil(count / limit);
+
+            return {
+                announcements: rows,
+                total: count,
+                totalPages
+            };
+        } catch (error) {
+            logger.error('Failed to fetch paginated announcements', {
+                error: error.message,
+                stack: error.stack
             });
             throw error;
         }
