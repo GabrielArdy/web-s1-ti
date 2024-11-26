@@ -1,4 +1,3 @@
-// migrations/YYYYMMDDHHMMSS-create-tb-lowongan-asisten.js
 'use strict';
 
 module.exports = {
@@ -10,18 +9,47 @@ module.exports = {
         autoIncrement: true
       },
       job_title: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       job_description: {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      job_requirements: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      location: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      begin_date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      end_date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      apply_deadline: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      competency: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      quota: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 1
+      },
       lecturer_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'tb_lecturer',
+          model: 'tb_dosen',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -36,6 +64,7 @@ module.exports = {
         allowNull: false
       }
     }, {
+      tableName: 'tb_lowongan_asisten',
       freezeTableName: true
     });
   },

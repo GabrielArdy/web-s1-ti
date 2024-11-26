@@ -18,6 +18,19 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false
       },
+      email: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+        unique: true
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'tb_user',
+          key: 'id'
+        }
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false
