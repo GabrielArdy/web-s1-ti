@@ -25,7 +25,7 @@ const Announcement = sequelize.define('tb_pengumuman', {
     allowNull: true
   },
   author: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     references: {
         model: User,
         key: 'id'
@@ -38,13 +38,13 @@ const Announcement = sequelize.define('tb_pengumuman', {
 });
 
 User.hasMany(Announcement, {
-    foreignKey: 'id',
-    as: 'author'
+  foreignKey: 'author',  // Changed from 'id'
+  as: 'announcements'
 });
 
 Announcement.belongsTo(User, {
-    foreignKey: 'id',
-    as: 'author'
+  foreignKey: 'author',  // Changed from 'id'
+  as: 'user'
 });
 
 
